@@ -27,7 +27,6 @@ It provides an online platform for displaying college notices organized by categ
 
 ## 📁 Folder Structure
 E-Notice-Board/
-│
 ├── index.html # Main webpage
 ├── style.css # Styles and layout
 ├── script.js # Logic for interactivity
