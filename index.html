@@ -3,60 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Notice Board | SRM Data Science Dept</title>
+  <title>E-Notice Board | Data Science Dept</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
-
 <body>
-  <!-- Particle Background -->
   <div id="particles-js"></div>
 
-  <!-- Header -->
-  <header class="header">
-    <h1>E-Notice Board</h1>
-    <p class="subtitle">SRM Institute of Science and Technology — Data Science Department</p>
-    <p class="datetime" id="datetime"></p>
+  <nav class="navbar">
+    <div class="logo">E-Notice Board</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#notices">Notices</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <header id="home">
+    <h1>SRM Institute of Science and Technology</h1>
+    <h2>Department of Data Science</h2>
+    <p id="datetime"></p>
   </header>
 
-  <!-- Emergency Banner -->
-  <div class="banner">🚨 Urgent: Exam form submission closes tomorrow! 🚨</div>
-
-  <!-- Filter Buttons -->
-  <div class="filters">
-    <button class="filter-btn active" data-category="all">All</button>
-    <button class="filter-btn" data-category="events">Events</button>
-    <button class="filter-btn" data-category="academics">Academics</button>
-    <button class="filter-btn" data-category="general">General</button>
-  </div>
-
-  <!-- Notice Feed -->
-  <section class="notice-feed" id="notice-feed">
-    <div class="notice-card" data-category="events">
-      <h3>AI Hackathon 2025</h3>
-      <p>Join the upcoming inter-college Data Science Hackathon! Click to learn more...</p>
+  <main id="notices" class="content">
+    <h3>📢 E-Notice Board</h3>
+    <div class="tabs">
+      <button class="tab active" onclick="filterNotices('all')">All</button>
+      <button class="tab" onclick="filterNotices('events')">Events</button>
+      <button class="tab" onclick="filterNotices('exam')">Exams</button>
+      <button class="tab" onclick="filterNotices('general')">General</button>
     </div>
 
-    <div class="notice-card" data-category="academics">
-      <h3>End Semester Exam Timetable</h3>
-      <p>Find your exam schedule and hall ticket details.</p>
-    </div>
+    <div class="notices-container" id="noticeList"></div>
+  </main>
 
-    <div class="notice-card" data-category="general">
-      <h3>Diwali Holidays Notice</h3>
-      <p>University will remain closed from Nov 2 to Nov 6.</p>
-    </div>
+  <section id="about" class="about">
+    <h3>About This Project</h3>
+    <p>
+      This is a futuristic <b>Data Science-themed E-Notice Board</b> designed to
+      display important announcements interactively. Built using HTML, CSS,
+      and JavaScript with a live particle animation background.
+    </p>
   </section>
 
-  <!-- Notice Modal -->
-  <div id="notice-modal" class="modal">
+  <footer>
+    <p>© 2025 SRM Institute | Developed by Asmit Kumar</p>
+  </footer>
+
+  <!-- Popup Modal -->
+  <div id="modal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2 id="modal-title"></h2>
-      <p id="modal-body"></p>
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h4 id="modalTitle"></h4>
+      <p id="modalMsg"></p>
+      <p id="modalDept" class="dept"></p>
     </div>
   </div>
 
-  <footer>
-    <p>Developed by Asmit Kumar | Data Science | SRM Trichy</p>
-  <
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
