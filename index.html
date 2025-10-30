@@ -1,122 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>E-Notice Board | SRM Data Science</title>
-
-  <!-- Your CSS -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Notice Board | Data Science Dept</title>
   <link rel="stylesheet" href="style.css" />
-
-  <!-- particles.js library (loads particles.js so we can configure it in script.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
 <body>
-
-  <!-- Particle container: particles.js will draw on this element -->
+  <!-- Particle Background -->
   <div id="particles-js"></div>
 
-  <!-- Header with college & department -->
-  <header class="header">
-    <h1>E-Notice Board</h1>
-    <p class="subtitle">SRM Institute of Science and Technology — Data Science Department</p>
-    <p id="datetime" class="datetime"></p> <!-- filled by JS -->
+  <!-- Emergency Banner -->
+  <div class="emergency-banner">
+    🚨 Urgent Notice: Mid-Sem Exams Rescheduled to Next Week! Check your email for details.
+  </div>
+
+  <!-- Header -->
+  <header>
+    <h1>📢 E-Notice Board</h1>
+    <p>SRM Institute of Science & Technology | Data Science Department</p>
+    <p id="date-display"></p>
   </header>
 
-  <!-- Emergency banner -->
-  <div class="banner" role="status">🚨 Important: Exam Form Submission closes <strong>Tomorrow, 5 PM</strong> — check Exams.</div>
-
-  <!-- Search bar -->
-  <div class="search-container">
-    <input id="search-input" type="text" placeholder="🔍 Search notices by keyword, title or dept..." aria-label="Search notices" />
-  </div>
-
-  <!-- Filters -->
-  <div class="filters">
-    <button class="filter-btn active" data-category="all">All</button>
-    <button class="filter-btn" data-category="events">Events</button>
-    <button class="filter-btn" data-category="academics">Academics</button>
-    <button class="filter-btn" data-category="general">General</button>
-  </div>
-
-  <!-- Year / Dept / Section selectors -->
-  <div class="dept-select">
-    <select id="year-select" aria-label="Select year">
-      <option value="all">All Years</option>
-      <option value="1st">1st Year</option>
-      <option value="2nd">2nd Year</option>
-      <option value="3rd">3rd Year</option>
-      <option value="4th">4th Year</option>
-    </select>
-
-    <select id="dept-select" aria-label="Select department">
-      <option value="all">All Departments</option>
-      <option value="CSE">CSE</option>
-      <option value="AIDS">AI & DS</option>
-      <option value="ECE">ECE</option>
-      <option value="MECH">MECH</option>
-    </select>
-
-    <select id="section-select" aria-label="Select section">
-      <option value="all">All Sections</option>
-      <option value="A">Section A</option>
-      <option value="B">Section B</option>
-      <option value="C">Section C</option>
-    </select>
-  </div>
-
-  <!-- Notice feed: each notice-card has data attributes used for filtering/search -->
-  <main class="notice-feed" id="notice-feed">
-    <!-- Example exam notice with download link + year/department/section attributes -->
-    <article class="notice-card" data-category="academics" data-year="3rd" data-dept="AIDS" data-section="A">
-      <h3>Data Mining Mid-Sem Exam</h3>
-      <p>Exam scheduled on 05 Nov 2025, 10:00 AM — Hall 203. Check hall ticket and seating.</p>
-      <!-- download link: put the file inside assets/ (create it) and use relative URL -->
-      <a class="download-link" href="assets/data-mining-timetable.pdf" download>📄 Download Timetable (PDF)</a>
-    </article>
-
-    <!-- Example event -->
-    <article class="notice-card" data-category="events" data-year="all" data-dept="all" data-section="all">
-      <h3>AI Hackathon 2025</h3>
-      <p>Register your team for the 24-hour Data Science hackathon by 03 Nov 2025.</p>
-    </article>
-
-    <!-- Example general -->
-    <article class="notice-card" data-category="general" data-year="all" data-dept="all" data-section="all">
-      <h3>Diwali Holidays Notice</h3>
-      <p>Campus closed from Nov 2 – Nov 6. Notices will be posted on return.</p>
-    </article>
-
-    <!-- you will add more notice-card elements as needed -->
-  </main>
-
-  <!-- Modal for full notice view -->
-  <div id="notice-modal" class="modal" aria-hidden="true" role="dialog" aria-label="Notice details">
-    <div class="modal-content">
-      <button class="close" aria-label="Close notice">&times;</button>
-      <h2 id="modal-title"></h2>
-      <div id="modal-body"></div>
-      <div id="modal-extra"></div> <!-- used to show download link if present -->
-    </div>
-  </div>
-
-  <!-- Subscribe section (added above footer) -->
-  <section class="subscribe-section" aria-label="Subscribe for updates">
-    <h2>📬 Stay Updated</h2>
-    <p>Enter your email to receive new notice alerts (demo only).</p>
-    <div class="subscribe-box">
-      <input id="email-input" type="email" placeholder="you@college.edu" aria-label="Email address" />
-      <button id="subscribe-btn">Subscribe</button>
-    </div>
-    <p id="subscribe-message" class="subscribe-message" aria-live="polite"></p>
+  <!-- Search Bar -->
+  <section class="search-section">
+    <input type="text" id="search-input" placeholder="Search notices..." />
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>Developed by Asmit Kumar — Data Science | SRM Trichy</p>
-  </footer>
+  <!-- Category Buttons -->
+  <section class="category-buttons">
+    <button class="category-btn active" data-category="all">All</button>
+    <button class="category-btn" data-category="exams">Exams</button>
+    <button class="category-btn" data-category="general">General</button>
+    <button class="category-btn" data-category="events">Events</button>
+  </section>
 
-  <!-- Your script (ordering matters: script.js expects DOM elements available) -->
-  <script src="script.js"></script>
-</body>
-</html>
+  <!-- Notices Section -->
+  <main id="notice-feed">
+    <!-- Example Notice 1 -->
+    <div class="notice-card" data-category="exams">
+      <h3>📄 Semester Exam Timetable Released</h3>
+      <p>The final timetable for Data Science semester exams is out. Download below.</p>
+      <a href="#" class="download-btn">📥 Download PDF</a>
+      <p class="timestamp">Posted on: Oct 31, 2025</p>
+    </div>
+
+    <!-- Example Notice 2 -->
+    <div class="notice-card" data-category="general">
+      <h3>📢 Department Cleanliness Drive</h3>
+      <p>Join the department event this Saturday at 8 AM in front of the admin block.</p>
+      <p class="timestamp">Posted on: Oct 28, 2025</p>
+    </div>
+
+    <!-- Example Notice 3 -->
+    <div class="notice-card" data-category="events">
+      <h3>🎉 Hackathon 2025 Announced!</h3>
+      <p>Register your team for the upcoming inter-college hackathon focused on AI & IoT.</p>
+      <a href="#" class="download-btn">📄 Register Form</a>
+      <p class="timestamp">Posted on: Oct 25, 2025</p>
+    </div>
+  </main>
+
+  <!-- Subscribe Section -->
+  <section class="subscribe-section">
+    <h2>
