@@ -1,55 +1,58 @@
-// Particles.js config
-particlesJS.load('particles-js', 'assets/particles.json', function() {
-  console.log('particles loaded');
-});
-
-// Date & Time
+// Real-time Date + Time
 function updateDateTime() {
   const now = new Date();
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('datetime').textContent = now.toLocaleDateString('en-US', options);
+  const formatted = now.toLocaleString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  document.getElementById("datetime").textContent = formatted;
 }
+setInterval(updateDateTime, 1000);
 updateDateTime();
 
-// Modal logic
-const modal = document.getElementById("noticeModal");
-const modalTitle = document.getElementById("modalTitle");
-const modalBody = document.getElementById("modalBody");
+// Particles.js setup
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 70 },
+    color: { value: "#00e5ff" },
+    shape: { type: "circle" },
+    opacity: { value: 0.5 },
+    size: { value: 3 },
+    line_linked: { enable: true, distance: 120, color: "#00e5ff", opacity: 0.4, width: 1 },
+    move: { enable: true, speed: 2 }
+  }
+});
+
+// Modal setup
+const modal = document.getElementById("notice-modal");
+const modalTitle = document.getElementById("modal-title");
+const modalBody = document.getElementById("modal-body");
 const closeBtn = document.querySelector(".close");
 
-document.querySelectorAll(".read-more").forEach(link => {
-  link.addEventListener("click", e => {
-    e.preventDefault();
+document.querySelectorAll(".notice-card").forEach(card => {
+  card.addEventListener("click", () => {
     modal.style.display = "flex";
-    const card = link.parentElement;
     modalTitle.textContent = card.querySelector("h3").textContent;
-    modalBody.textContent = link.dataset.full;
+    modalBody.textContent = card.querySelector("p").textContent + " (Full notice details could go here...)";
   });
 });
 
-closeBtn.onclick = () => modal.style.display = "none";
+closeBtn.onclick = () => (modal.style.display = "none");
 window.onclick = e => { if (e.target == modal) modal.style.display = "none"; };
 
-// Filter logic
-const filterButtons = document.querySelectorAll(".filter-btn");
-const notices = document.querySelectorAll(".notice-card");
-
-filterButtons.forEach(btn => {
+// Filter buttons
+const filterBtns = document.querySelectorAll(".filter-btn");
+filterBtns.forEach(btn => {
   btn.addEventListener("click", () => {
-    filterButtons.forEach(b => b.classList.remove("active"));
+    document.querySelector(".filter-btn.active").classList.remove("active");
     btn.classList.add("active");
     const category = btn.dataset.category;
-    notices.forEach(n => {
-      n.style.display = (category === "all" || n.dataset.category === category) ? "block" : "none";
+    document.querySelectorAll(".notice-card").forEach(card => {
+      card.style.display = (category === "all" || card.dataset.category === category) ? "block" : "none";
     });
-  });
-});
-
-// Search logic
-document.getElementById("searchInput").addEventListener("input", e => {
-  const term = e.target.value.toLowerCase();
-  notices.forEach(n => {
-    const text = n.textContent.toLowerCase();
-    n.style.display = text.includes(term) ? "block" : "none";
   });
 });
