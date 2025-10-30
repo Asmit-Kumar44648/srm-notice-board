@@ -3,63 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Notice Board | Data Science Dept</title>
+  <title>Data Science E-Notice Board</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
+  <!-- Particle Background -->
   <div id="particles-js"></div>
 
-  <nav class="navbar">
-    <div class="logo">E-Notice Board</div>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#notices">Notices</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
-  </nav>
-
-  <header id="home">
+  <!-- Header -->
+  <header>
     <h1>SRM Institute of Science and Technology</h1>
     <h2>Department of Data Science</h2>
     <p id="datetime"></p>
   </header>
 
-  <main id="notices" class="content">
-    <h3>📢 E-Notice Board</h3>
-    <div class="tabs">
-      <button class="tab active" onclick="filterNotices('all')">All</button>
-      <button class="tab" onclick="filterNotices('events')">Events</button>
-      <button class="tab" onclick="filterNotices('exam')">Exams</button>
-      <button class="tab" onclick="filterNotices('general')">General</button>
-    </div>
-
-    <div class="notices-container" id="noticeList"></div>
-  </main>
-
-  <section id="about" class="about">
-    <h3>About This Project</h3>
-    <p>
-      This is a futuristic <b>Data Science-themed E-Notice Board</b> designed to
-      display important announcements interactively. Built using HTML, CSS,
-      and JavaScript with a live particle animation background.
-    </p>
-  </section>
-
-  <footer>
-    <p>© 2025 SRM Institute | Developed by Asmit Kumar</p>
-  </footer>
-
-  <!-- Popup Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h4 id="modalTitle"></h4>
-      <p id="modalMsg"></p>
-      <p id="modalDept" class="dept"></p>
-    </div>
+  <!-- Emergency Banner -->
+  <div class="banner">
+    🚨 Urgent: Mid-semester exam schedule has been updated! Check the Exam category.
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+  <!-- Filter Bar -->
+  <div class="filters">
+    <button class="filter-btn active" data-category="all">All</button>
+    <button class="filter-btn" data-category="exam">Exams</button>
+    <button class="filter-btn" data-category="event">Events</button>
+    <button class="filter-btn" data-category="general">General</button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search notices..." />
+  </div>
+
+  <!-- Notice Feed -->
+  <main id="noticeFeed">
+    <!-- Notice cards (simulated dynamic content) -->
+    <div class="notice-card" data-category="exam">
+      <h3>📘 Data Mining Mid-Sem Exam</h3>
+      <p>Exam to be held on 5th Nov, 10 AM — Hall 203</p>
+      <a href="#" class="read-more" data-full="Full details about seating arrangement, syllabus and exam pattern.">Read More</a>
+    </div>
+
+    <div class="notice-card" data-category="event">
+      <h3>🎓 Hackathon 2025 Registration Open</h3>
+      <p>Join the inter-college Data Science Hackathon by 3rd Nov!</p>
+      <a href="#" class="read-more" data-full="Teams of 3-4 allowed. Submit ideas related to AI, IoT or sustainability.">Read More</a>
+    </div>
+
+    <div class="notice-card" data-category="general">
+      <h3>🧠 Machine Learning Guest Lecture</h3>
+      <p>By Prof. Meera Nair, IIT-M, on 7th Nov, 2 PM</p>
+      <a href="#" class="read-mor
