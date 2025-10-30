@@ -66,21 +66,30 @@
   </div>
 
   <!-- Notice feed: each notice-card has data attributes used for filtering/search -->
-<main class="notice-feed" id="notice-feed">
-  <!-- loader / messages will show here while data loads -->
-  <div id="notice-loader" class="loader">Loading notices…</div>
+  <main class="notice-feed" id="notice-feed">
+    <!-- Example exam notice with download link + year/department/section attributes -->
+    <article class="notice-card" data-category="academics" data-year="3rd" data-dept="AIDS" data-section="A">
+      <h3>Data Mining Mid-Sem Exam</h3>
+      <p>Exam scheduled on 05 Nov 2025, 10:00 AM — Hall 203. Check hall ticket and seating.</p>
+      <!-- download link: put the file inside assets/ (create it) and use relative URL -->
+      <a class="download-link" href="assets/data-mining-timetable.pdf" download>📄 Download Timetable (PDF)</a>
+    </article>
 
-  <!-- example demo card (keeps look while backend not connected) -->
-  <article id="demo-notice" class="notice-card demo" data-category="academics" data-year="3rd" data-dept="AIDS" data-section="A">
-    <h3>Sample Notice (Demo)</h3>
-    <p>This is a demo notice. When backend is connected, real notices will appear here.</p>
-  </article>
+    <!-- Example event -->
+    <article class="notice-card" data-category="events" data-year="all" data-dept="all" data-section="all">
+      <h3>AI Hackathon 2025</h3>
+      <p>Register your team for the 24-hour Data Science hackathon by 03 Nov 2025.</p>
+    </article>
 
-  <!-- empty state (hidden by default) -->
-  <div id="notice-empty" class="notice-empty" style="display:none;">No notices found.</div>
-</main>
+    <!-- Example general -->
+    <article class="notice-card" data-category="general" data-year="all" data-dept="all" data-section="all">
+      <h3>Diwali Holidays Notice</h3>
+      <p>Campus closed from Nov 2 – Nov 6. Notices will be posted on return.</p>
+    </article>
 
-  
+    <!-- you will add more notice-card elements as needed -->
+  </main>
+
   <!-- Modal for full notice view -->
   <div id="notice-modal" class="modal" aria-hidden="true" role="dialog" aria-label="Notice details">
     <div class="modal-content">
