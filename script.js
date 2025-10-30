@@ -1,131 +1,68 @@
-/* ------------------------ Date & Time ------------------------ */
-function updateDateTime() {
-  const now = new Date();
-  const formatted = now.toLocaleString("en-IN", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const dt = document.getElementById("datetime");
-  if (dt) dt.textContent = formatted;
-}
-setInterval(updateDateTime, 1000);
-updateDateTime();
+// ✅ Display Current Date & Day
+const dateDisplay = document.getElementById("date-display");
+const now = new Date();
+const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+dateDisplay.textContent = now.toLocaleDateString("en-US", options);
 
-/* ------------------------ Particles ------------------------ */
-/* particlesJS is loaded via CDN in index.html. This attaches a canvas inside #particles-js */
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 70 },
-    color: { value: "#00e5ff" },
-    shape: { type: "circle" },
-    opacity: { value: 0.5 },
-    size: { value: 3 },
-    line_linked: { enable: true, distance: 120, color: "#00e5ff", opacity: 0.35, width: 1 },
-    move: { enable: true, speed: 2 }
-  },
-  interactivity: { events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } } },
-  retina_detect: true
-});
-
-/* ------------------------ Modal (click to open notice) ------------------------ */
-const modal = document.getElementById("notice-modal");
-const modalTitle = document.getElementById("modal-title");
-const modalBody = document.getElementById("modal-body");
-const modalExtra = document.getElementById("modal-extra");
-const closeBtn = document.querySelector(".close");
-
-function openModalFromCard(card) {
-  if (!modal) return;
-  const title = card.querySelector("h3")?.textContent || "Notice";
-  const body = card.querySelector("p")?.innerHTML || "";
-  modalTitle.textContent = title;
-  modalBody.innerHTML = body;
-  // If card has a download link, show it inside modal-extra
-  const download = card.querySelector(".download-link");
-  if (download) {
-    modalExtra.innerHTML = `<p><a href="${download.href}" class="download-link" download>${download.textContent}</a></p>`;
-  } else modalExtra.innerHTML = "";
-  modal.style.display = "flex";
-  modal.setAttribute("aria-hidden", "false");
-}
-
-document.querySelectorAll(".notice-card").forEach(card => {
-  card.addEventListener("click", () => openModalFromCard(card));
-});
-
-if (closeBtn) closeBtn.addEventListener("click", () => { modal.style.display = "none"; modal.setAttribute("aria-hidden","true"); });
-window.addEventListener("click", (e) => { if (e.target === modal) { modal.style.display = "none"; modal.setAttribute("aria-hidden","true"); } });
-
-/* ------------------------ Filtering & Search ------------------------ */
-const filterBtns = document.querySelectorAll(".filter-btn");
-const yearSelect = document.getElementById("year-select");
-const deptSelect = document.getElementById("dept-select");
-const sectionSelect = document.getElementById("section-select");
+// ✅ Search Functionality
 const searchInput = document.getElementById("search-input");
+const notices = document.querySelectorAll(".notice-card");
 
-function filterNotices() {
-  const activeBtn = document.querySelector(".filter-btn.active");
-  const category = activeBtn ? activeBtn.dataset.category : "all";
-  const year = yearSelect ? yearSelect.value : "all";
-  const dept = deptSelect ? deptSelect.value : "all";
-  const section = sectionSelect ? sectionSelect.value : "all";
-  const term = searchInput ? searchInput.value.trim().toLowerCase() : "";
-
-  document.querySelectorAll(".notice-card").forEach(card => {
-    const catMatch = (category === "all") || (card.dataset.category === category);
-    const yearMatch = (year === "all") || (card.dataset.year === year);
-    const deptMatch = (dept === "all") || (card.dataset.dept === dept);
-    const sectionMatch = (section === "all") || (card.dataset.section === section);
-    const text = (card.textContent || "").toLowerCase();
-    const searchMatch = term === "" || text.includes(term);
-
-    card.style.display = (catMatch && yearMatch && deptMatch && sectionMatch && searchMatch) ? "block" : "none";
-  });
-}
-
-/* wire filter buttons */
-filterBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    filterNotices();
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  notices.forEach((card) => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(searchTerm) ? "block" : "none";
   });
 });
 
-/* wire selects & search */
-[yearSelect, deptSelect, sectionSelect].forEach(sel => { if (sel) sel.addEventListener("change", filterNotices); });
-if (searchInput) searchInput.addEventListener("input", filterNotices);
+// ✅ Category Filter
+const categoryButtons = document.querySelectorAll(".category-btn");
+categoryButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    categoryButtons.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
 
-/* ------------------------ Subscribe (frontend simulation) ------------------------ */
+    const category = btn.getAttribute("data-category");
+    notices.forEach((card) => {
+      if (category === "all" || card.getAttribute("data-category") === category) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+});
+
+// ✅ Subscribe Simulation
 const subscribeBtn = document.getElementById("subscribe-btn");
 const emailInput = document.getElementById("email-input");
-const subscribeMsg = document.getElementById("subscribe-message");
+const message = document.getElementById("subscribe-message");
 
-if (subscribeBtn) {
-  subscribeBtn.addEventListener("click", () => {
-    if (!emailInput) return;
-    const email = emailInput.value.trim();
-    if (email === "") {
-      subscribeMsg.style.color = "tomato";
-      subscribeMsg.textContent = "⚠️ Please enter an email address.";
-      return;
-    }
-    // basic validation: must include '@' and a domain-like '.' (keeps it simple)
-    if (!email.includes("@") || !email.includes(".")) {
-      subscribeMsg.style.color = "orange";
-      subscribeMsg.textContent = "⚠️ Please enter a valid email (e.g. name@college.edu)";
-      return;
-    }
-    // success (demo only)
-    subscribeMsg.style.color = "#00e5ff";
-    subscribeMsg.textContent = "✅ Subscribed! (demo — no emails are actually sent)";
+subscribeBtn.addEventListener("click", () => {
+  const email = emailInput.value.trim();
+  if (email === "") {
+    message.style.color = "red";
+    message.textContent = "⚠️ Please enter your email address.";
+  } else if (!email.includes("@") || !email.endsWith(".com")) {
+    message.style.color = "orange";
+    message.textContent = "⚠️ Enter a valid email (e.g., name@srmist.edu.in)";
+  } else {
+    message.style.color = "#00e5ff";
+    message.textContent = "✅ You’ve successfully subscribed for updates!";
     emailInput.value = "";
-  });
-}
+  }
+});
 
-/* ------------------------ initial filter run ------------------------ */
-filterNotices();
+// ✅ Particle Background
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 60 },
+    color: { value: "#00e5ff" },
+    shape: { type: "circle" },
+    opacity: { value: 0.6 },
+    size: { value: 3 },
+    line_linked: { enable: true, color: "#00e5ff", opacity: 0.2 },
+    move: { enable: true, speed: 2 }
+  }
+});
