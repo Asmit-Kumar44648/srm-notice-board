@@ -9,36 +9,55 @@
 <body>
   <div id="particles-js"></div>
 
-  <header>
+  <nav class="navbar">
+    <div class="logo">E-Notice Board</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#notices">Notices</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <header id="home">
     <h1>SRM Institute of Science and Technology</h1>
     <h2>Department of Data Science</h2>
+    <p id="datetime"></p>
   </header>
 
-  <main>
-    <div class="notice-board">
-      <h3>📢 E-Notice Board</h3>
-      <p id="datetime"></p>
-
-      <div class="notice">
-        <h4>Upcoming Data Analytics Workshop</h4>
-        <p>Join the workshop on “AI in Data Science” on 3rd Nov 2025 at 10:00 AM, Lab 204.</p>
-      </div>
-
-      <div class="notice">
-        <h4>Mid-Sem Exam Schedule</h4>
-        <p>Mid-Sem exams for Data Mining and Machine Learning start from 5th Nov 2025.</p>
-      </div>
-
-      <div class="notice">
-        <h4>Placement Training</h4>
-        <p>Data Science students are required to attend pre-placement sessions starting 7th Nov 2025.</p>
-      </div>
+  <main id="notices" class="content">
+    <h3>📢 E-Notice Board</h3>
+    <div class="tabs">
+      <button class="tab active" onclick="filterNotices('all')">All</button>
+      <button class="tab" onclick="filterNotices('events')">Events</button>
+      <button class="tab" onclick="filterNotices('exam')">Exams</button>
+      <button class="tab" onclick="filterNotices('general')">General</button>
     </div>
+
+    <div class="notices-container" id="noticeList"></div>
   </main>
+
+  <section id="about" class="about">
+    <h3>About This Project</h3>
+    <p>
+      This is a futuristic <b>Data Science-themed E-Notice Board</b> designed to
+      display important announcements interactively. Built using HTML, CSS,
+      and JavaScript with a live particle animation background.
+    </p>
+  </section>
 
   <footer>
     <p>© 2025 SRM Institute | Developed by Asmit Kumar</p>
   </footer>
+
+  <!-- Popup Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h4 id="modalTitle"></h4>
+      <p id="modalMsg"></p>
+      <p id="modalDept" class="dept"></p>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <script src="script.js"></script>
