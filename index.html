@@ -3,55 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Science E-Notice Board</title>
+  <title>E-Notice Board | SRM Data Science Dept</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
+
 <body>
   <!-- Particle Background -->
   <div id="particles-js"></div>
 
   <!-- Header -->
-  <header>
-    <h1>SRM Institute of Science and Technology</h1>
-    <h2>Department of Data Science</h2>
-    <p id="datetime"></p>
+  <header class="header">
+    <h1>E-Notice Board</h1>
+    <p class="subtitle">SRM Institute of Science and Technology — Data Science Department</p>
+    <p class="datetime" id="datetime"></p>
   </header>
 
   <!-- Emergency Banner -->
-  <div class="banner">
-    🚨 Urgent: Mid-semester exam schedule has been updated! Check the Exam category.
-  </div>
+  <div class="banner">🚨 Urgent: Exam form submission closes tomorrow! 🚨</div>
 
-  <!-- Filter Bar -->
+  <!-- Filter Buttons -->
   <div class="filters">
     <button class="filter-btn active" data-category="all">All</button>
-    <button class="filter-btn" data-category="exam">Exams</button>
-    <button class="filter-btn" data-category="event">Events</button>
+    <button class="filter-btn" data-category="events">Events</button>
+    <button class="filter-btn" data-category="academics">Academics</button>
     <button class="filter-btn" data-category="general">General</button>
   </div>
 
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search notices..." />
-  </div>
-
   <!-- Notice Feed -->
-  <main id="noticeFeed">
-    <!-- Notice cards (simulated dynamic content) -->
-    <div class="notice-card" data-category="exam">
-      <h3>📘 Data Mining Mid-Sem Exam</h3>
-      <p>Exam to be held on 5th Nov, 10 AM — Hall 203</p>
-      <a href="#" class="read-more" data-full="Full details about seating arrangement, syllabus and exam pattern.">Read More</a>
+  <section class="notice-feed" id="notice-feed">
+    <div class="notice-card" data-category="events">
+      <h3>AI Hackathon 2025</h3>
+      <p>Join the upcoming inter-college Data Science Hackathon! Click to learn more...</p>
     </div>
 
-    <div class="notice-card" data-category="event">
-      <h3>🎓 Hackathon 2025 Registration Open</h3>
-      <p>Join the inter-college Data Science Hackathon by 3rd Nov!</p>
-      <a href="#" class="read-more" data-full="Teams of 3-4 allowed. Submit ideas related to AI, IoT or sustainability.">Read More</a>
+    <div class="notice-card" data-category="academics">
+      <h3>End Semester Exam Timetable</h3>
+      <p>Find your exam schedule and hall ticket details.</p>
     </div>
 
     <div class="notice-card" data-category="general">
-      <h3>🧠 Machine Learning Guest Lecture</h3>
-      <p>By Prof. Meera Nair, IIT-M, on 7th Nov, 2 PM</p>
-      <a href="#" class="read-mor
+      <h3>Diwali Holidays Notice</h3>
+      <p>University will remain closed from Nov 2 to Nov 6.</p>
+    </div>
+  </section>
+
+  <!-- Notice Modal -->
+  <div id="notice-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-body"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Developed by Asmit Kumar | Data Science | SRM Trichy</p>
+  <
