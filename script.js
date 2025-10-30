@@ -19,27 +19,16 @@ updateDateTime();
 /* particlesJS is loaded via CDN in index.html. This attaches a canvas inside #particles-js */
 particlesJS("particles-js", {
   particles: {
-    number: { value: 90 },
+    number: { value: 70 },
     color: { value: "#00e5ff" },
     shape: { type: "circle" },
-    opacity: { value: 0.6 },
+    opacity: { value: 0.5 },
     size: { value: 3 },
-    line_linked: {
-      enable: true,
-      distance: 120,
-      color: "#00e5ff",
-      opacity: 0.35,
-      width: 1,
-    },
-    move: { enable: true, speed: 3.5 },
+    line_linked: { enable: true, distance: 120, color: "#00e5ff", opacity: 0.35, width: 1 },
+    move: { enable: true, speed: 2 }
   },
-  interactivity: {
-    events: {
-      onhover: { enable: true, mode: "repulse" },
-      onclick: { enable: true, mode: "push" },
-    },
-  },
-  retina_detect: true,
+  interactivity: { events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } } },
+  retina_detect: true
 });
 
 /* ------------------------ Modal (click to open notice) ------------------------ */
@@ -55,52 +44,21 @@ function openModalFromCard(card) {
   const body = card.querySelector("p")?.innerHTML || "";
   modalTitle.textContent = title;
   modalBody.innerHTML = body;
-
   // If card has a download link, show it inside modal-extra
   const download = card.querySelector(".download-link");
   if (download) {
     modalExtra.innerHTML = `<p><a href="${download.href}" class="download-link" download>${download.textContent}</a></p>`;
-  } else {
-    modalExtra.innerHTML = "";
-  }
-
-  // ✅ Add extra notice info (category, year, dept, section)
-  const extraInfo = `
-    <p><strong>Category:</strong> ${card.dataset.category}</p>
-    <p><strong>Year:</strong> ${card.dataset.year}</p>
-    <p><strong>Department:</strong> ${card.dataset.dept}</p>
-    <p><strong>Section:</strong> ${card.dataset.section}</p>
-  `;
-  modalExtra.insertAdjacentHTML("beforeend", extraInfo);
-
+  } else modalExtra.innerHTML = "";
   modal.style.display = "flex";
   modal.setAttribute("aria-hidden", "false");
 }
 
-document.querySelectorAll(".notice-card").forEach((card) => {
+document.querySelectorAll(".notice-card").forEach(card => {
   card.addEventListener("click", () => openModalFromCard(card));
 });
 
-if (closeBtn)
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
-  });
-
-window.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
-  }
-});
-
-// ✅ ESC key closes modal
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && modal.style.display === "flex") {
-    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
-  }
-});
+if (closeBtn) closeBtn.addEventListener("click", () => { modal.style.display = "none"; modal.setAttribute("aria-hidden","true"); });
+window.addEventListener("click", (e) => { if (e.target === modal) { modal.style.display = "none"; modal.setAttribute("aria-hidden","true"); } });
 
 /* ------------------------ Filtering & Search ------------------------ */
 const filterBtns = document.querySelectorAll(".filter-btn");
@@ -117,34 +75,57 @@ function filterNotices() {
   const section = sectionSelect ? sectionSelect.value : "all";
   const term = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
-  document.querySelectorAll(".notice-card").forEach((card) => {
-    const catMatch = category === "all" || card.dataset.category === category;
-    const yearMatch = year === "all" || card.dataset.year === year;
-    const deptMatch = dept === "all" || card.dataset.dept === dept;
-    const sectionMatch = section === "all" || card.dataset.section === section;
+  document.querySelectorAll(".notice-card").forEach(card => {
+    const catMatch = (category === "all") || (card.dataset.category === category);
+    const yearMatch = (year === "all") || (card.dataset.year === year);
+    const deptMatch = (dept === "all") || (card.dataset.dept === dept);
+    const sectionMatch = (section === "all") || (card.dataset.section === section);
     const text = (card.textContent || "").toLowerCase();
     const searchMatch = term === "" || text.includes(term);
 
-    card.style.display =
-      catMatch && yearMatch && deptMatch && sectionMatch && searchMatch
-        ? "block"
-        : "none";
+    card.style.display = (catMatch && yearMatch && deptMatch && sectionMatch && searchMatch) ? "block" : "none";
   });
 }
 
 /* wire filter buttons */
-filterBtns.forEach((btn) => {
+filterBtns.forEach(btn => {
   btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".filter-btn")
-      .forEach((b) => b.classList.remove("active"));
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     filterNotices();
   });
 });
 
 /* wire selects & search */
-[yearSelect, deptSelect, sectionSelect].forEach((sel) => {
-  if (sel) sel.addEventListener("change", filterNotices);
-});
-if (searchInput) searchInput.addEventListener("input", fi
+[yearSelect, deptSelect, sectionSelect].forEach(sel => { if (sel) sel.addEventListener("change", filterNotices); });
+if (searchInput) searchInput.addEventListener("input", filterNotices);
+
+/* ------------------------ Subscribe (frontend simulation) ------------------------ */
+const subscribeBtn = document.getElementById("subscribe-btn");
+const emailInput = document.getElementById("email-input");
+const subscribeMsg = document.getElementById("subscribe-message");
+
+if (subscribeBtn) {
+  subscribeBtn.addEventListener("click", () => {
+    if (!emailInput) return;
+    const email = emailInput.value.trim();
+    if (email === "") {
+      subscribeMsg.style.color = "tomato";
+      subscribeMsg.textContent = "⚠️ Please enter an email address.";
+      return;
+    }
+    // basic validation: must include '@' and a domain-like '.' (keeps it simple)
+    if (!email.includes("@") || !email.includes(".")) {
+      subscribeMsg.style.color = "orange";
+      subscribeMsg.textContent = "⚠️ Please enter a valid email (e.g. name@college.edu)";
+      return;
+    }
+    // success (demo only)
+    subscribeMsg.style.color = "#00e5ff";
+    subscribeMsg.textContent = "✅ Subscribed! (demo — no emails are actually sent)";
+    emailInput.value = "";
+  });
+}
+
+/* ------------------------ initial filter run ------------------------ */
+filterNotices();
